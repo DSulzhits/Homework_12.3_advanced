@@ -1,11 +1,23 @@
+import pytest
 from utils import dicts
 
 
-def test_key_value():
-    assert dicts.get_val({"vcs": "mercurial"}, "vcs") == "mercurial"
-    assert dicts.get_val({"vcs": "mercurial"}, "vcs", "git") == "mercurial"
-    assert dicts.get_val({}, "vcs", "git") == "git"
-    assert dicts.get_val({}, "vcs", "bazaar") == "bazaar"
-    assert dicts.get_val({}, "") == "git"
+@pytest.fixture
+def data():
+    return {"vcs": "mercurial"}
 
 
+@pytest.fixture
+def data_1():
+    return {}
+
+
+def test_key_value(data):
+    assert dicts.get_val(data, "vcs") == data("vcs")
+    assert dicts.get_val(data, "vcs", "git") == data("vcs")
+
+
+def test_key_value(data_1):
+    assert dicts.get_val(data_1, "vcs", "git") == "git"
+    assert dicts.get_val(data_1, "vcs", "bazaar") == "bazaar"
+    assert dicts.get_val(data_1, "") == "git"
