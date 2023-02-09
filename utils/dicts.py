@@ -3,6 +3,3 @@ def get_val(collection, key, default='git'):
         return collection[key]
     elif key not in collection:
         return default
-
-
-
